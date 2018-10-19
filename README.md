@@ -1,27 +1,31 @@
 # sdrc
 
-# install brew 
+# Installation steps for Mac OSX
+-install brew 
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
-# install python  
+-install python  
 brew install python 
 
-# install virtualenv 
+-install virtualenv 
 pip3 install virtualenv 
 
-# make dir  
+-make dir  
 vitualenv --python=python3 py 
 
-# activate 
+-activate 
 cd py
 source bin/activate 
 
-# install pip 
+-install hy 
 pip install git+https://github.com/hylang/hy.git 
 
-# clone repo 
+-clone repo 
 git clone https://github.com/sheunaluko/sdrc.git
 
-# get deps 
+-get deps
+cd sdrc
 pip install BioPython pandas xlrd 
 
+-ready to go 
+python sdrc_main.py
