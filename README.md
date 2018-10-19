@@ -21,9 +21,8 @@ vitualenv --python=python3 py
 ###### activate 
 ```
 cd py
-```
 source bin/activate 
-
+```
 ###### install hy 
 ```
 pip install git+https://github.com/hylang/hy.git 
