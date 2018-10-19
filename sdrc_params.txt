@@ -1,0 +1,8 @@
+members_file = SDRC-memberlist.xlsx
+num_rows     = 100 
+start_date   = 2016/09/01
+end_date     = 2018/09/01 
+keywords     = [ "diabetes" , "insulin" , "glucagon" ] 
+output_file  = test2
+
+
