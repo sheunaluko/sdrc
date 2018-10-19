@@ -41,6 +41,7 @@ pip install BioPython pandas xlrd
 ```
 cd dev/py 
 source bin/activate 
+cd sdrc 
 #edit the param file first then run: 
 python sdrc_main.py
 ```
