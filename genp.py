@@ -65,28 +65,7 @@ def append_file(fname, strang) :
         outfile.write(strang)
 
 
-newsapi = NewsApiClient(api_key=i.news_api_key) 
 
-# /v2/everything
-
-def search_news(query) : 
-    # must note that this defaults to the past year 
-    all_articles = newsapi.get_everything(q=query, 
-                                          #from_param='2017-09-01',
-                                          #to='2018-09-01',
-                                          language='en',
-                                          sort_by='relevancy' )  
-    return all_articles  
-
-
-def search_news_page(query, p ) : 
-    all_articles = newsapi.get_everything(q=query, 
-                                          from_param='2017-09-01',
-                                          to='2018-09-01',
-                                          language='en',
-                                          sort_by='relevancy', 
-                                          page = p ) 
-    return all_articles  
 
 
 
