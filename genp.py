@@ -2,7 +2,6 @@ import hy
 import util 
 import info as i 
 import json 
-from newsapi import NewsApiClient
 import re 
 import gen as g 
 import pandas as p 
