@@ -36,7 +36,11 @@ git clone https://github.com/sheunaluko/sdrc.git
 cd sdrc
 pip install BioPython pandas xlrd 
 ```
-###### ready to go 
+
+# How to run 
 ```
+cd dev/py 
+source bin/activate 
+#edit the param file first then run: 
 python sdrc_main.py
 ```
