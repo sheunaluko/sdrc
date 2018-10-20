@@ -210,11 +210,12 @@ def test() :
 def rmg_do_all() : 
     parsed_sheets = [ [sn, sheet_to_df(sn,s)] for sn,s in get_rmg_sheets() ]
     # now write the excel file 
-    writer = p.ExcelWriter('rmg_parsed.xlsx')
+    writer = p.ExcelWriter(g.rmg_file)
     for sn, s in parsed_sheets : 
         print(sn) 
         s.to_excel(writer,sn)
     writer.save()
+    print("Finished writing: " + g.rmg_file)
 
 def my_module()  : 
     return sys.modules["genp"]

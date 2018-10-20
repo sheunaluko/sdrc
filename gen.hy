@@ -23,8 +23,8 @@
 (setv sdrc-collaborators None) 
 (setv sdf None ) 
 (setv output_file None) 
-(setv rmg_file  "/Users/oluwa/Downloads/SDRC Active Awards & Outstanding Proposals.xlsx")
-(setv rmg_header 3) 
+(setv rmg-file  "/Users/oluwa/Downloads/SDRC Active Awards & Outstanding Proposals.xlsx")
+(setv rmg-header 3) 
 
 
 ;; -- > end params 
