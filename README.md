@@ -24,6 +24,7 @@ cd py
 source bin/activate 
 ```
 ###### install hy 
+The following command may fail the first time, just run it once more if so and it should succeed. 
 ```
 pip install git+https://github.com/hylang/hy.git 
 ```
