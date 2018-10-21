@@ -9,7 +9,7 @@ import shutil
 parameter_filename = "sdrc_params.txt" 
 
 #load param file into variables 
-[sdrc_filename , sdrc_rows, start_date , end_date , keywords ,output_file]  = [s.split("=")[1].strip() for s  in util.read_file(parameter_filename).split("\n") if s is not '' ] 
+[sdrc_filename , sdrc_rows, start_date , end_date , keywords ,output_file, grant_file]  = [s.split("=")[1].strip() for s  in util.read_file(parameter_filename).split("\n") if s is not '' ] 
 
 output_file = genp.cwd() + "/" + output_file + ".tsv" 
 

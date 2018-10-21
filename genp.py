@@ -96,6 +96,22 @@ def flip_name(name) :
 def parse_members_list(members) : 
     return ", ".join([flip_name(m) for m in members ] )
 
+def remove_stuff_from_name(name) : 
+    return name.strip().replace(".","").replace(",","").replace("Dr ","").replace("Prof ","").lower()
+
+def parse_name_for_matching(name) : 
+    tokens = [ remove_stuff_from_name(s) for s in name.split(",")]
+    return tokens[0] + " " + tokens[1][0]
+
+def name_is_member(inv) :
+    if g.sdrc_collaborators_set : 
+        return parse_name_for_matching(inv) in g.sdrc_collaborators_set 
+    else  : 
+        raise Exception("gen.sdrc-collaborators-set not defined yet, need to init gen.hy")
+def get_members_from_sheet(s) : 
+    return s['Investigator']
+    
+
 # handles a group of ids where struct is [ name, df ]
 def handle_id_group(arg) :
     [ID, df] = arg 
@@ -108,38 +124,26 @@ def handle_id_group(arg) :
         PI = "none" 
     
     # get the SDRC members 
-    members = df.loc[df['SDRC Member'] == 'Y']['Investigator'].values
-    # create vec of the [ [member, role ] ... ] (no longer needed) 
-    # members_and_roles = [ [ m['Investigator'] , m['Role'] ] for i,m in members.iterrows()]
+    labeled_members = df.loc[df['SDRC Member'] == 'Y']['Investigator'].values
+
+    # because sometimes they are not labeled properly, we will also get them by manually searching: 
+    found_members = [i for i in df['Investigator'].values if name_is_member(i) ] 
+
+    # merge the arrays into list removing duplicates 
+    members = list( set(labeled_members).union(set(found_members))  ) 
+
+
     # get a complete list of all Investigators minus the PI
-    
     all_sub_investigators = df.loc[df['Role'] != "Principal Investigator"]['Investigator'].values 
     
     debug = df 
-    print("=> " + str(ID) )
+    #print("=> " + str(ID) )
     # get the old (unchanged) data 
     old = None 
-    
-    # oh wow... get ready for some ugly code ! 
-    try : 
-        old  = df[['School','Department', 'Owning Org', 'Agreement', 'Segment', 'Direct Sponsor',
-                   'Direct Sponsor Program Code', 'Direct Sponsor Program', 'Segment Start Date',
-                   'Segment End Date', 'Project Title', 'Segment Total']].iloc[0:1,:] #only first row
-    except :
-        try : 
-            old = df[['School',' Department', 'Owning Org', 'Agreement Type', 'Direct Sponsor',
-                      'Direct Sponsor Reference', 'Proposed Start Date', 'Proposed End Date',
-                      'Project Title', 'Total Requested']].iloc[0:1,:]
-        except : 
-            old = df[['School', 'Dept', 'Org', 'Agreement', 'Direct Sponsor',
-                      'Direct Sponsor Reference', 'Direct Sponsor Program Code',
-                      'Direct Sponsor Program','Proposed Start Date', 'Proposed End Date',
-                      'Proposal Title',' Total Requested']].iloc[0:1,:]
-            
-            
 
-            
-        
+    # oh wow... 
+    old  = df.iloc[0:1,4:]  # get first row, 4th and remaining columns 
+
     debug = [df,ID,old]
     # figure out what index we got 
     ind = old.index.values[0]
@@ -148,10 +152,9 @@ def handle_id_group(arg) :
     new = p.DataFrame({'Project Id': [ID] , 
                        'Principal Investigator': [PI] , 
                        'SDRC Members': parse_members_list(members), 
-                       'All Investigators' : parse_members_list(all_sub_investigators)} , 
+                       'Non-PI Investigators' : parse_members_list(all_sub_investigators)} , 
                       index = [ind])
 
-    
     # merge the new columns with the unchanged ones 
     result = p.concat([new, old], axis=1, sort=False)
     
@@ -170,14 +173,9 @@ def handle_id_group(arg) :
 
               
 def parse_sheet(s) : 
-    # only look at projects which have SDRC member
-    members = s.loc[s['SDRC Member'] == 'Y' ] 
-    # want to get all the IDs of projects that have an SDRC member 
-    project_IDs_with_members = set(members['Project ID'])
-    # now get all of the projects from the ORIGINAL data (not just members) with those IDs 
-    projects_with_members = s.loc[s['Project ID'].isin(project_IDs_with_members)]
+    # look at all projects
     # group those by ids , returns iterable
-    grouped_projects_by_ID = projects_with_members.groupby('Project ID')
+    grouped_projects_by_ID = s.groupby('Project ID')
     projects_vector = [] 
     for ID, group in grouped_projects_by_ID : 
         projects_vector.append( [ ID, group ] ) 
@@ -210,12 +208,12 @@ def test() :
 def rmg_do_all() : 
     parsed_sheets = [ [sn, sheet_to_df(sn,s)] for sn,s in get_rmg_sheets() ]
     # now write the excel file 
-    writer = p.ExcelWriter(g.rmg_file)
+    writer = p.ExcelWriter(g.rmg_output)
     for sn, s in parsed_sheets : 
-        print(sn) 
+        print(f'Writing: {sn}') 
         s.to_excel(writer,sn)
     writer.save()
-    print("Finished writing: " + g.rmg_file)
+    print("Finished writing: " + g.rmg_output)
 
 def my_module()  : 
     return sys.modules["genp"]

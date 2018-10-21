@@ -21,6 +21,7 @@
 (setv keywords None) 
 (setv sdrc-authors None) 
 (setv sdrc-collaborators None) 
+(setv sdrc-collaborators-set None) 
 (setv sdf None ) 
 (setv output_file None) 
 (setv rmg-file  "/Users/oluwa/Downloads/SDRC Active Awards & Outstanding Proposals.xlsx")
@@ -67,8 +68,10 @@
 (defn prepare-for-cache [] 
   (global sdrc-authors) 
   (global sdrc-collaborators) 
+  (global sdrc-collaborators-set) 
   (setv sdrc-authors (u.atake sdrc-rows  (get-sdrc-names)))
-  (setv sdrc-collaborators (get-sdrc-collaborators)))
+  (setv sdrc-collaborators (get-sdrc-collaborators))
+  (setv sdrc-collaborators-set (set (get-sdrc-collaborators))))
 
 
 ;; after prepare-for-cache is called, then cache-all is called 
