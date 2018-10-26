@@ -39,6 +39,8 @@ pip install BioPython pandas xlrd openpyxl
 ```
 
 # How to run 
+
+If you just finished the installation then skip to the last line - 'python sdrc_main.py'. Otherwise, assuming you just opened the terminal, you must go the the /py directory which you created during installation (first line below), and follow the steps to activate the virtualenv and then run. 
 ```
 cd py
 source bin/activate 
