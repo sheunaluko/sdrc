@@ -2,15 +2,15 @@
 
 # Installation steps for Mac OSX
 
-###### install brew 
+###### install brew (skip if brew already installed on your computer)
 ```
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
-###### install python  
+###### install python  (skip if already installed)
 ```
 brew install python 
 ```
-###### install virtualenv 
+###### install virtualenv (skip if already installed) 
 ```
 pip3 install virtualenv 
 ```
