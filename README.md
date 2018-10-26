@@ -40,7 +40,7 @@ pip install BioPython pandas xlrd openpyxl
 
 # How to run 
 ```
-cd dev/py 
+cd py
 source bin/activate 
 cd sdrc 
 #edit the param file first then run: 
@@ -49,7 +49,7 @@ python sdrc_main.py
 
 # How to re sync code after updates
 ```
-cd dev/py/sdrc 
+cd py/sdrc 
 git pull origin master 
 ```
 If errors arise, you can try:
