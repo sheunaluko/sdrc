@@ -12,7 +12,7 @@ parameter_filename = "sdrc_params.txt"
 #load param file into variables 
 [sdrc_filename , sdrc_rows, start_date , end_date , keywords ,output_file, grant_filename]  = [s.split("=")[1].strip() for s  in util.read_file(parameter_filename).split("\n") if s is not '' ] 
 
-grant_output = genp.cwd() + "/" + "parsed_rmg.xlsx"
+grant_output = genp.cwd() + "/" + "parsed_" + grant_filename 
 
 print("\n\n=================================\nSTANFORD DIABETES RESEARCH CENTER\n=================================") 
 print("Created for Kiran Kocherlakota, contact: oluwa@stanford.edu , (901) 652-5382, Sun Oct 14 13:43:38 PDT 2018") 
