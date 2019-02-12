@@ -19,7 +19,7 @@ print("Created for Kiran Kocherlakota, contact: oluwa@stanford.edu , (901) 652-5
 
 print("\nLoading param file...") 
 print( f'grant_file  = {grant_filename}\n')
-print("\nREMEMBER that each sheet in the grant file must START with the column names (i.e. have no header.")
+print("\nREMEMBER that each sheet in the grant file must START with the column names (i.e. have no header).\n")
 
 r = input("Please verify that the parameters above are correct, then press Enter to continue...")
 
