@@ -44,7 +44,8 @@
 
 (defn get-sdrc-names [] 
   (u.amap convert-author-name-2
-          (-> (read-excel sdrc-filename) (get "Center Member"))))
+          (u.atake sdrc-rows
+                   (-> (read-excel sdrc-filename) (get "Center Member")))))
 
 (defn process-component [c] 
   (-> c 
