@@ -1,7 +1,7 @@
 members_file = SDRC-memberlist.xlsx
 num_rows     = 100 
-start_date   = 2016/09/01
-end_date     = 2018/09/01 
+start_date   = 2018/11/01
+end_date     = 2019/02/10 
 keywords     = [ "diabetes" , "insulin"  ] 
 output_file  = test2
 grant_file   = grants.xlsx 

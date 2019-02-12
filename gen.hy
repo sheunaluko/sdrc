@@ -350,18 +350,20 @@
       
 
 ;; now i will define the dict objects that will be used for the various searches 
-(setv base-query {"afilliation" [["stanford"]] ;;double vector , see comments above 
-                  "publication_date" [[(sdrc-date-range)]]}) 
+(defn base-query [] 
+  {"afilliation" [["stanford"]] ;;double vector , see comments above 
+   "publication_date" [[(sdrc-date-range)]]})
 
-(setv searches {"date"            base-query 
-                "date-diabetes"   (u.amerge base-query {"text_word" [["diabetes"]]})
-                "date-grant"      (u.amerge base-query { "grant_number" [["DK11704"]]})})
+(defn searches [] 
+  {"date" (base-query)
+   "date-diabetes"   (u.amerge (base-query) {"text_word" [["diabetes"]]})
+   "date-grant"      (u.amerge (base-query) { "grant_number" [["DK11704"]]})})
 
 (defn keyword-search [k] 
-  (u.amerge base-query {"text_word" [[k]]}))
+  (u.amerge (base-query) {"text_word" [[k]]}))
                 
 (defn author-search [author search-type] 
-  (setv query (u.amerge (get searches search-type) {"author" [[author]]}))
+  (setv query (u.amerge (get (searches) search-type) {"author" [[author]]}))
   (setv result (smart-query #** query))
   result)
 
@@ -374,7 +376,7 @@
 ;; --- Going to add the ability to try and GET ALL THE AUTHORS at once ! 
 (defn author-list-search [author-list search-type]
   (setv alist (lfor a author-list [a] )) 
-  (setv query (u.amerge (get searches search-type) {"author" alist}))
+  (setv query (u.amerge (get (searches) search-type) {"author" alist}))
   (setv result (smart-query #** query))
   result)
 
@@ -405,7 +407,7 @@
 (defn get-and-save-author-info [author] 
   (print "\nRetrieving data for:  " author ) 
   (setv fname (get-fname author))
-  (setv delay 0.1 ) ;; time in s to be respectful to their api 
+  (setv delay 2 ) ;; time in s to be respectful to their api 
   ;; ok so the next thing we need to do is build the json structure by requesting data
   
   (setv date-info (search-summary (author-search author "date")))

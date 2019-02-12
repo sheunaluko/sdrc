@@ -20,6 +20,8 @@ print("\nLoading param file...")
 print( f'members_file = {sdrc_filename}\nnum_rows     = {sdrc_rows}\nstart_date   = {start_date}\nend_date     = {end_date}\nkeywords     = {keywords}\noutput_file  = {output_file}\n')
 
 
+
+
 r = input("Please verify that the parameters above are correct,\n especially the date format, then press Enter to continue...")
 
 
@@ -32,6 +34,8 @@ gen.sdrc_end_date   = end_date
 gen.sdrc_rows       = int(sdrc_rows )
 gen.keywords        = json.loads(keywords)  
 gen.output_file     = output_file 
+
+print("\nUsing date range: " + gen.sdrc_date_range() + "\n" ) 
 
 if genp.check_for_file(output_file) : 
     ans = input("The output file already exists.. would you like to overwrite it? (type yes/no)")
@@ -47,9 +51,10 @@ if genp.check_for_file(output_file) :
 cache = genp.cwd() + "/cache" 
 if os.path.isdir(cache) : 
     #clear it 
-    print("Clearing cache directory") 
-    shutil.rmtree(cache)
-    os.mkdir(cache) 
+    #print("Clearing cache directory") 
+    #shutil.rmtree(cache)
+    #os.mkdir(cache) 
+    pass
 else : 
     #make it 
     print("Making cache directory") 
