@@ -76,7 +76,7 @@ def contains(a1,a2) :
 
 # WILL DO RMG PARSING HERE SINCE WORKING WITH DATA FRAMES 
 def get_rmg_sheets() : 
-    return g.parse_rmg_file()
+    return [ x for x in g.parse_rmg_file() if not x[1].empty ] 
 
 # For Colleen’s document, I need the code to identify when SDRC member is
 # involved whether as investigator or co-investigator or any capacity. For each project,
@@ -202,7 +202,7 @@ def nexttt() :
 def test() : 
     sheets = get_rmg_sheets() 
     s1 = sheets[0][1] 
-    d  = sheet_to_df(s1) 
+    d  = sheet_to_df('first',s1) 
     return d
 
 def rmg_do_all() : 

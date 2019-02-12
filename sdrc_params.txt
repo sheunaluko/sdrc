@@ -4,7 +4,7 @@ start_date   = 2016/09/01
 end_date     = 2018/09/01 
 keywords     = [ "diabetes" , "insulin"  ] 
 output_file  = test2
-grant_file   = SDRC Active Awards & Outstanding Proposals.xlsx 
+grant_file   = grants.xlsx 
 
 
 
