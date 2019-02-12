@@ -25,7 +25,7 @@
 (setv sdf None ) 
 (setv output_file None) 
 (setv rmg-file  "/Users/oluwa/Downloads/grants.xlsx")
-(setv rmg-header 2) 
+(setv rmg-header 0) 
 
 
 ;; -- > end params 
