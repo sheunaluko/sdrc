@@ -250,6 +250,7 @@
 
  
 (setv Bio.Entrez.email "oluwa@stanford.edu") 
+(setv Bio.Entrez.api_key "c4c637fb444e1b9c28b66ff523ad32c83308")
 (setv retmax 10000)
 
 (defn search-pubmed [q] 
