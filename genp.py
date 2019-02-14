@@ -110,7 +110,10 @@ def name_is_member(inv) :
         raise Exception("gen.sdrc-collaborators-set not defined yet, need to init gen.hy")
 def get_members_from_sheet(s) : 
     return s['Investigator']
-    
+
+def get_data_frame(data, cols) : 
+    return p.DataFrame(data, columns=cols)
+
 
 # handles a group of ids where struct is [ name, df ]
 def handle_id_group(arg) :

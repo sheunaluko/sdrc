@@ -15,15 +15,15 @@
 ; they get modified by sdrc_main before the program is run 
 
 (setv sdrc-filename "SDRC-memberlist.xlsx") 
-(setv sdrc-start-date "2016/09/01" )  ;; "2017/09/01") ;; Form of the date is as such: YYYY/mm/dd 
-(setv sdrc-end-date "2018/09/01" )  ;; 2018/09/01") 
+(setv sdrc-start-date "2018/08/01" )  ;; "2017/09/01") ;; Form of the date is as such: YYYY/mm/dd 
+(setv sdrc-end-date "2018/10/01" )  ;; 2018/09/01") 
 (setv sdrc-rows 100 ) 
-(setv keywords None) 
+(setv keywords ["insulin" "diabetes"])
 (setv sdrc-authors None) 
 (setv sdrc-collaborators None) 
 (setv sdrc-collaborators-set None) 
 (setv sdf None ) 
-(setv output_file None) 
+(setv output_file "tmp_output") 
 (setv rmg-file  "/Users/oluwa/Downloads/grants.xlsx")
 (setv rmg-header 0) 
 
@@ -86,6 +86,11 @@
 (defn is-collaborator-match [ a ] 
   (or #* (lfor s sdrc-collaborators (gp.contains (.lower a) s))))
 
+(defn is-collaborator-match-2 [ a ] 
+  (setv ret (lfor s sdrc-collaborators :if (gp.contains (.lower a) s) s))
+  (if (> (len ret) 0 ) (first ret)
+    False))
+
 (defn find-collaborators [article]
   (setv authors-list (get article "AuthorList"))
   (setv result [] ) 
@@ -95,6 +100,17 @@
   (if result  
     (.join "," result )
     "None" ))
+
+(defn find-collaborators-2 [article]
+  (setv authors-list (get article "AuthorList"))
+  (setv result [] ) 
+  (for [a authors-list] 
+    (setv collaborator (is-collaborator-match-2 a))
+    (when collaborator
+      (.append result collaborator)))
+  (if result  
+    result 
+    False))
   
 (defn grant? [article ]
   (setv id (get article "Id" ))
@@ -251,7 +267,7 @@
  
 (setv Bio.Entrez.email "oluwa@stanford.edu") 
 (setv Bio.Entrez.api_key "c4c637fb444e1b9c28b66ff523ad32c83308")
-(setv retmax 10000)
+(setv retmax 10000000)
 
 (defn search-pubmed [q] 
       (Bio.Entrez.read 
@@ -379,12 +395,14 @@
   (setv alist (lfor a author-list [a] )) 
   (setv query (u.amerge (get (searches) search-type) {"author" alist}))
   (setv result (smart-query #** query))
+  (gp.append_file "search_queries" (+ result "\n\n"))
   result)
 
 (defn author-list-keyword-search [author-list key]
   (setv alist (lfor a author-list [a] )) 
   (setv query (u.amerge (keyword-search key) {"author" alist}))
   (setv result (smart-query #** query))
+  (gp.append_file "search_queries" (+ result "\n\n"))
   result)
 
 

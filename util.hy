@@ -28,6 +28,14 @@
 (defn adrop [num l] 
   (list (drop num l ))) 
 
+(defn sort [arr]
+  (.sort arr) 
+  arr)
+
+(defn sorted-keys [d]
+  (setv ret (list (d.keys)))
+  (.sort ret) 
+  ret)
 
 (defn amerge [a b] 
   (setv r {}) 
@@ -36,6 +44,18 @@
   r) 
 
 
+(defn get-in [d vec] 
+  (setv tmp (get d (first vec)))
+  (for [k (arest vec)]
+    (setv tmp (get tmp k)))
+  tmp)
+
+(defn update-in [d vec f]
+  (if (= (len vec) 1) (assoc d (first vec) (f (get d (first vec))))
+    ;;else 
+    (assoc d (first vec) (update-in (get d (first vec)) (arest vec) f)))
+  d)
+       
 (defn read-file [file]
   (with [f (open file)]
     (.read f)))
@@ -50,3 +70,9 @@
   result )
     
   
+(defn ensure-ext [s ext]
+  (setv tokens (.split s "."))
+  (if (= (len tokens)  1 ) (+ s "." ext)
+      (= (len tokens)  2 ) (+ (first tokens) "." ext) 
+    (raise (Exception "Check string"))))
+      
